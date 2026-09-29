@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero-section">
+
+    <div class="hero-content">
+
+        <p class="eyebrow">DIGITAL INCIDENT INVESTIGATION PLATFORM</p>
+
+        <h1>
+            PRESERVE.
+            <span>VERIFY.</span>
+            INVESTIGATE.
+        </h1>
+
+        <p class="hero-description">
+            BLACK BOX captures application events, detects abnormal
+            patterns and helps reconstruct incidents through a clear
+            investigation timeline.
+        </p>
+
+        <div class="hero-actions">
+            <a href="{{ url_for('login') }}" class="btn btn-primary">
+                Get Started
+            </a>
+
+            <a href="{{ url_for('register') }}" class="btn btn-secondary">
+                Create Account
+            </a>
+        </div>
+
+    </div>
+
+    <div class="hero-visual">
+
+        <div class="black-box-card">
+
+            <div class="box-header">
+                <span class="live-dot"></span>
+                BLACK BOX MONITOR
+            </div>
+
+            <div class="monitor-line">
+                <span>EVENT MONITORING</span>
+                <strong>ACTIVE</strong>
+            </div>
+
+            <div class="monitor-line">
+                <span>INCIDENT DETECTION</span>
+                <strong>ACTIVE</strong>
+            </div>
+
+            <div class="monitor-line">
+                <span>DATABASE</span>
+                <strong>CONNECTED</strong>
+            </div>
+
+            <div class="monitor-line">
+                <span>STATUS</span>
+                <strong>READY</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="features-section">
+
+    <div class="section-heading">
+        <p class="eyebrow">HOW IT WORKS</p>
+        <h2>From events to investigation</h2>
+    </div>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <span>01</span>
+            <h3>Capture</h3>
+            <p>
+                Application activity is recorded as structured events.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <span>02</span>
+            <h3>Detect</h3>
+            <p>
+                BLACK BOX checks recent events for abnormal failure patterns.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <span>03</span>
+            <h3>Investigate</h3>
+            <p>
+                Related events are connected to reconstruct the incident timeline.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <span>04</span>
+            <h3>Resolve</h3>
+            <p>
+                Root cause and resolution are recorded for future reference.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

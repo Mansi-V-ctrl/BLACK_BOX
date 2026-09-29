@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+
+{% block title %}Demo Application | BLACK BOX{% endblock %}
+
+{% block content %}
+
+<div class="demo-page">
+
+    <div class="page-header demo-header">
+        <div>
+            <p class="eyebrow">BLACK BOX / APPLICATION SIMULATOR</p>
+            <h1>Demo Payment Application</h1>
+            <p>Generate application activity and observe how BLACK BOX captures and detects abnormal events.</p>
+        </div>
+
+        <div class="demo-live">
+            <span class="live-dot"></span>
+            LIVE SIMULATION
+        </div>
+    </div>
+
+
+    <div class="demo-layout">
+
+        <!-- PAYMENT APPLICATION -->
+
+        <section class="payment-app">
+
+            <div class="payment-topbar">
+
+                <div class="payment-brand">
+                    <div class="payment-logo">P</div>
+
+                    <div>
+                        <strong>PAYFLOW</strong>
+                        <span>DEMO APPLICATION</span>
+                    </div>
+                </div>
+
+                <div class="secure-status">
+                    <span>●</span>
+                    SECURE
+                </div>
+
+            </div>
+
+
+            <div class="payment-body">
+
+                <div class="account-card">
+
+                    <div>
+                        <span>DEMO ACCOUNT</span>
+                        <strong>**** 4821</strong>
+                    </div>
+
+                    <div class="account-status">
+                        ACTIVE
+                    </div>
+
+                </div>
+
+
+                <div class="payment-heading">
+                    <p class="eyebrow">NEW TRANSACTION</p>
+                    <h2>Make a Payment</h2>
+                    <p>Run a simulated transaction to generate application events.</p>
+                </div>
+
+
+                <form method="POST" action="{{ url_for('generate_demo') }}" id="paymentForm">
+
+                    <div class="amount-box">
+
+                        <span>PAYMENT AMOUNT</span>
+
+                        <div class="amount-input">
+                            <span>₹</span>
+                            <input
+                                type="number"
+                                name="amount"
+                                value="2500"
+                                min="1"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="demo-field">
+
+                            <label>PAYMENT METHOD</label>
+
+                            <select name="payment_method">
+                                <option>UPI</option>
+                                <option>Credit Card</option>
+                                <option>Debit Card</option>
+                                <option>Net Banking</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="demo-field">
+
+                            <label>APPLICATION</label>
+
+                            <div class="readonly-field">
+                                <span>●</span>
+                                Demo Payment App
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="transaction-info">
+
+                        <div>
+                            <span>TRANSACTION TYPE</span>
+                            <strong>PAYMENT</strong>
+                        </div>
+
+                        <div>
+                            <span>ENVIRONMENT</span>
+                            <strong>DEMO</strong>
+                        </div>
+
+                        <div>
+                            <span>MONITORING</span>
+                            <strong class="green-text">ACTIVE</strong>
+                        </div>
+
+                    </div>
+
+
+                    <button type="submit" class="run-button" id="runButton">
+
+                        <span class="run-icon">▶</span>
+
+                        <span>
+                            <strong>RUN TRANSACTION</strong>
+                            <small>Generate application events</small>
+                        </span>
+
+                        <span class="button-arrow">→</span>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <div class="payment-footer">
+
+                <span>PAYFLOW DEMO</span>
+
+                <span>BLACK BOX MONITORED</span>
+
+            </div>
+
+        </section>
+
+
+        <!-- BLACK BOX MONITOR -->
+
+        <aside class="monitor-panel">
+
+            <div class="monitor-header">
+
+                <div>
+                    <p class="eyebrow">BLACK BOX</p>
+                    <h2>Event Monitor</h2>
+                </div>
+
+                <div class="monitor-status">
+                    <span class="live-dot"></span>
+                    ACTIVE
+                </div>
+
+            </div>
+
+
+            <div class="monitor-description">
+                Application events generated during the simulation
+                are automatically captured by BLACK BOX.
+            </div>
+
+
+            <div class="monitor-terminal">
+
+                <div class="terminal-top">
+
+                    <span>EVENT STREAM</span>
+
+                    <span id="eventCounter">
+                        READY
+                    </span>
+
+                </div>
+
+
+                <div class="terminal-body" id="eventStream">
+
+                    <div class="terminal-empty">
+
+                        <div class="terminal-icon">◉</div>
+
+                        <strong>Waiting for activity</strong>
+
+                        <span>
+                            Run a transaction to begin
+                            event capture.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="detection-box">
+
+                <div class="detection-icon">
+                    !
+                </div>
+
+                <div>
+
+                    <span>DETECTION ENGINE</span>
+
+                    <strong>Monitoring failure patterns</strong>
+
+                    <small>
+                        3+ failed events within 5 minutes
+                    </small>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    <!-- WORKFLOW -->
+
+    <section class="demo-workflow">
+
+        <div class="workflow-title">
+
+            <div>
+                <p class="eyebrow">SIMULATION WORKFLOW</p>
+                <h2>How BLACK BOX observes the application</h2>
+            </div>
+
+        </div>
+
+
+        <div class="demo-steps">
+
+            <div class="demo-step">
+
+                <div class="step-number">01</div>
+
+                <div>
+                    <strong>TRANSACTION</strong>
+                    <span>Payment initiated</span>
+                </div>
+
+            </div>
+
+
+            <div class="step-arrow">→</div>
+
+
+            <div class="demo-step">
+
+                <div class="step-number">02</div>
+
+                <div>
+                    <strong>EVENT CAPTURE</strong>
+                    <span>Activity recorded</span>
+                </div>
+
+            </div>
+
+
+            <div class="step-arrow">→</div>
+
+
+            <div class="demo-step">
+
+                <div class="step-number">03</div>
+
+                <div>
+                    <strong>PATTERN CHECK</strong>
+                    <span>Failures analyzed</span>
+                </div>
+
+            </div>
+
+
+            <div class="step-arrow">→</div>
+
+
+            <div class="demo-step">
+
+                <div class="step-number">04</div>
+
+                <div>
+                    <strong>INCIDENT</strong>
+                    <span>Investigation begins</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("paymentForm");
+    const button = document.getElementById("runButton");
+    const stream = document.getElementById("eventStream");
+    const counter = document.getElementById("eventCounter");
+
+    if (!form) return;
+
+    form.addEventListener("submit", function () {
+
+        button.classList.add("loading");
+
+        button.querySelector("strong").textContent = "RUNNING...";
+        button.querySelector("small").textContent = "Capturing application events";
+
+        counter.textContent = "CAPTURING";
+
+        stream.innerHTML = `
+            <div class="capture-animation">
+
+                <div class="capture-spinner"></div>
+
+                <strong>Capturing events...</strong>
+
+                <span>
+                    BLACK BOX is monitoring application activity
+                </span>
+
+            </div>
+        `;
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

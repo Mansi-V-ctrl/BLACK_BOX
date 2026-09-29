@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block title %}Login | BLACK BOX{% endblock %}
+
+{% block content %}
+
+<div class="auth-page">
+
+    <div class="auth-layout">
+
+        <!-- LEFT INFORMATION -->
+
+        <div class="auth-info">
+
+            <div class="auth-info-badge">
+                <span class="status-pulse"></span>
+                SECURE INVESTIGATION ACCESS
+            </div>
+
+            <h1>
+                Enter the
+                <span>BLACK BOX.</span>
+            </h1>
+
+            <p>
+                Access your investigation workspace, monitor application
+                activity, review incidents and reconstruct digital events.
+            </p>
+
+
+            <div class="auth-features">
+
+                <div class="auth-feature">
+                    <div class="auth-feature-icon">◉</div>
+
+                    <div>
+                        <strong>Event Monitoring</strong>
+                        <span>Track captured application activity.</span>
+                    </div>
+                </div>
+
+
+                <div class="auth-feature">
+                    <div class="auth-feature-icon">!</div>
+
+                    <div>
+                        <strong>Incident Detection</strong>
+                        <span>Identify abnormal failure patterns.</span>
+                    </div>
+                </div>
+
+
+                <div class="auth-feature">
+                    <div class="auth-feature-icon">✓</div>
+
+                    <div>
+                        <strong>Investigation Records</strong>
+                        <span>Maintain a clear incident timeline.</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGIN CARD -->
+
+        <div class="auth-card">
+
+            <div class="auth-card-header">
+
+                <div class="auth-mobile-logo">
+                    BB
+                </div>
+
+                <p class="eyebrow">
+                    SECURE ACCESS
+                </p>
+
+                <h2>
+                    Welcome back
+                </h2>
+
+                <p>
+                    Sign in to continue to your investigation workspace.
+                </p>
+
+            </div>
+
+
+            <form method="POST" class="auth-form">
+
+                <div class="form-group">
+
+                    <label for="email">
+                        EMAIL ADDRESS
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">@</span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <div class="label-row">
+
+                        <label for="password">
+                            PASSWORD
+                        </label>
+
+                    </div>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">●</span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="password">
+                            SHOW
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit"
+                        class="btn btn-primary auth-submit">
+
+                    SIGN IN
+
+                    <span>→</span>
+
+                </button>
+
+            </form>
+
+
+            <div class="auth-divider">
+                <span>NEW INVESTIGATOR?</span>
+            </div>
+
+
+            <a href="{{ url_for('register') }}"
+               class="auth-outline-btn">
+
+                CREATE NEW ACCOUNT
+
+            </a>
+
+
+            <a href="{{ url_for('index') }}"
+               class="auth-back">
+
+                ← Back to BLACK BOX
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

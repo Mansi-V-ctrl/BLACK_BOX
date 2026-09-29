@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}BLACK BOX{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+{% if session.get('user_id') %}
+
+<div class="app-shell">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <a href="{{ url_for('home') }}" class="brand-link">
+
+                <div class="brand-mark">
+                    BB
+                </div>
+
+                <div class="brand-text">
+                    <strong>BLACK BOX</strong>
+                    <span>INVESTIGATION PLATFORM</span>
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-label">
+            WORKSPACE
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="{{ url_for('home') }}"
+               class="{% if request.endpoint == 'home' %}active{% endif %}">
+                <span class="nav-icon">⌂</span>
+                <span>Home</span>
+            </a>
+
+            <a href="{{ url_for('dashboard') }}"
+               class="{% if request.endpoint == 'dashboard' %}active{% endif %}">
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="{{ url_for('demo') }}"
+               class="{% if request.endpoint == 'demo' or request.endpoint == 'generate_demo' %}active{% endif %}">
+                <span class="nav-icon">▶</span>
+                <span>Demo App</span>
+            </a>
+
+            <a href="{{ url_for('events') }}"
+               class="{% if request.endpoint == 'events' %}active{% endif %}">
+                <span class="nav-icon">◉</span>
+                <span>Events</span>
+            </a>
+
+            <a href="{{ url_for('incidents') }}"
+               class="{% if request.endpoint == 'incidents' or request.endpoint == 'create_incident' %}active{% endif %}">
+                <span class="nav-icon">!</span>
+                <span>Incidents</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <div class="sidebar-status">
+
+            <span class="status-pulse"></span>
+
+            <div>
+                <strong>SYSTEM ONLINE</strong>
+                <small>Monitoring active</small>
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="user-box">
+
+                <div class="user-avatar">
+                    {{ session.get('user_name', 'U')[0]|upper }}
+                </div>
+
+                <div class="user-info">
+
+                    <strong>
+                        {{ session.get('user_name') }}
+                    </strong>
+
+                    <span>
+                        Investigator
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <a href="{{ url_for('logout') }}" class="logout-btn">
+
+                <span>↪</span>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <span class="topbar-section">
+                    BLACK BOX
+                </span>
+
+                <span class="topbar-divider">/</span>
+
+                <span class="topbar-page">
+                    {% block topbar %}Investigation Workspace{% endblock %}
+                </span>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="topbar-status">
+                    <span class="status-pulse"></span>
+                    SYSTEM ONLINE
+                </div>
+
+                <div class="topbar-user">
+                    {{ session.get('user_name') }}
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <div class="content-wrapper">
+
+{% else %}
+
+<!-- ================= PUBLIC HEADER ================= -->
+
+<header class="public-header">
+
+    <a href="{{ url_for('index') }}" class="public-logo">
+
+        <span class="public-logo-mark">
+            BB
+        </span>
+
+        <div>
+            <strong>BLACK BOX</strong>
+            <small>INVESTIGATION PLATFORM</small>
+        </div>
+
+    </a>
+
+
+    <nav class="public-nav">
+
+        <a href="{{ url_for('index') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('login') }}">
+            Login
+        </a>
+
+        <a href="{{ url_for('register') }}" class="public-register">
+            Get Started
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="public-main">
+
+{% endif %}
+
+
+<!-- ================= FLASH MESSAGES ================= -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        <div class="flash-container">
+
+            {% for category, message in messages %}
+
+                <div class="flash-message {{ category }}">
+
+                    <span class="flash-icon">
+                        {% if category == 'success' %}
+                            ✓
+                        {% else %}
+                            !
+                        {% endif %}
+                    </span>
+
+                    <span>{{ message }}</span>
+
+                    <button type="button"
+                            class="flash-close"
+                            onclick="this.parentElement.remove()">
+                        ×
+                    </button>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+{% endwith %}
+
+
+{% block content %}
+{% endblock %}
+
+
+{% if session.get('user_id') %}
+
+        </div>
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer class="blackbox-footer">
+
+            <div class="footer-inner">
+
+                <div class="footer-brand">
+                    <div class="footer-brand-mark">BB</div>
+
+                    <div>
+                        <strong>BLACK BOX</strong>
+                        <span>Digital Evidence Investigation Platform</span>
+                    </div>
+                </div>
+
+                <div class="footer-center">
+                    <span>PRESERVE.</span>
+                    <span>VERIFY.</span>
+                    <span>INVESTIGATE.</span>
+                </div>
+
+                <div class="footer-right">
+                    <span>© 2026 BLACK BOX</span>
+                    <span class="footer-dot">•</span>
+                    <span>Investigation Workspace</span>
+                </div>
+
+            </div>
+
+        </footer>
+
+    </main>
+
+{% else %}
+
+</main>
+
+<!-- ================= PUBLIC FOOTER ================= -->
+
+<footer class="blackbox-footer public-footer">
+
+    <div class="footer-inner">
+
+        <div class="footer-brand">
+            <div class="footer-brand-mark">BB</div>
+
+            <div>
+                <strong>BLACK BOX</strong>
+                <span>Digital Evidence Investigation Platform</span>
+            </div>
+        </div>
+
+        <div class="footer-center">
+            <span>PRESERVE.</span>
+            <span>VERIFY.</span>
+            <span>INVESTIGATE.</span>
+        </div>
+
+        <div class="footer-right">
+            <span>© 2026 BLACK BOX</span>
+            <span class="footer-dot">•</span>
+            <span>Digital Investigation Platform</span>
+        </div>
+
+    </div>
+
+</footer>
+
+{% endif %}
+
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
+

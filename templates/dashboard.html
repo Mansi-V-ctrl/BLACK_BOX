@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <p class="eyebrow">BLACK BOX / ANALYTICS</p>
+        <h1>Investigation Dashboard</h1>
+        <p>Monitor events, failures and active incidents.</p>
+    </div>
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div class="stat-icon">◉</div>
+        <div>
+            <span>Total Events</span>
+            <h2>{{ total_events }}</h2>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">!</div>
+        <div>
+            <span>Open Incidents</span>
+            <h2>{{ open_incidents }}</h2>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">✓</div>
+        <div>
+            <span>Resolved Incidents</span>
+            <h2>{{ resolved_incidents }}</h2>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">×</div>
+        <div>
+            <span>Failed Events</span>
+            <h2>{{ failed_events }}</h2>
+        </div>
+    </div>
+
+</div>
+
+<div class="dashboard-grid">
+
+    <div class="dashboard-card">
+        <div class="card-header">
+            <div>
+                <h3>Event Status</h3>
+                <p>Distribution of application events</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="eventChart"></canvas>
+        </div>
+
+        <div id="eventData"
+             data-labels='{{ status_data | map(attribute="status") | list | tojson }}'
+             data-values='{{ status_data | map(attribute="count") | list | tojson }}'>
+        </div>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="card-header">
+            <div>
+                <h3>Incident Severity</h3>
+                <p>Severity distribution of incidents</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="severityChart"></canvas>
+        </div>
+
+        <div id="severityData"
+             data-labels='{{ severity_data | map(attribute="severity") | list | tojson }}'
+             data-values='{{ severity_data | map(attribute="count") | list | tojson }}'>
+        </div>
+    </div>
+
+</div>
+
+<div class="dashboard-card activity-card">
+
+    <div class="card-header">
+        <div>
+            <h3>System Overview</h3>
+            <p>Current BLACK BOX monitoring status</p>
+        </div>
+
+        <span class="status-badge success">
+            SYSTEM ACTIVE
+        </span>
+    </div>
+
+    <div class="overview-grid">
+
+        <div class="overview-item">
+            <span>Event Monitoring</span>
+            <strong>ACTIVE</strong>
+        </div>
+
+        <div class="overview-item">
+            <span>Incident Detection</span>
+            <strong>ACTIVE</strong>
+        </div>
+
+        <div class="overview-item">
+            <span>Database</span>
+            <strong>CONNECTED</strong>
+        </div>
+
+        <div class="overview-item">
+            <span>Detection Window</span>
+            <strong>5 MINUTES</strong>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const eventData = document.getElementById("eventData");
+    const severityData = document.getElementById("severityData");
+
+    const eventLabels = JSON.parse(eventData.dataset.labels);
+    const eventValues = JSON.parse(eventData.dataset.values);
+
+    const severityLabels = JSON.parse(severityData.dataset.labels);
+    const severityValues = JSON.parse(severityData.dataset.values);
+
+    new Chart(document.getElementById("eventChart"), {
+        type: "doughnut",
+        data: {
+            labels: eventLabels,
+            datasets: [{
+                data: eventValues
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: "bottom"
+                }
+            }
+        }
+    });
+
+    new Chart(document.getElementById("severityChart"), {
+        type: "bar",
+        data: {
+            labels: severityLabels,
+            datasets: [{
+                label: "Incidents",
+                data: severityValues
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+{% endblock %}

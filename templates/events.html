@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Events | BLACK BOX{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <p class="eyebrow">EVENT STREAM</p>
+        <h1>Events</h1>
+        <p>Automatically captured application activity.</p>
+    </div>
+
+    <a href="{{ url_for('demo') }}" class="btn primary">
+        Generate Events
+    </a>
+
+</div>
+
+<div class="panel">
+
+    {% if events %}
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Application</th>
+                    <th>Event</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for event in events %}
+
+                <tr>
+
+                    <td>#{{ event.event_id }}</td>
+
+                    <td>{{ event.application_name }}</td>
+
+                    <td><strong>{{ event.event_type }}</strong></td>
+
+                    <td>
+                        <span class="status {{ event.status|lower }}">
+                            {{ event.status }}
+                        </span>
+                    </td>
+
+                    <td>{{ event.description }}</td>
+
+                    <td>{{ event.event_time }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+        No events found. Open the Demo App to generate events.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

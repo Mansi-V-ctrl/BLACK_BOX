@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+{% block title %}Incident #{{ incident.incident_id }} | BLACK BOX{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <p class="eyebrow">BLACK BOX / INCIDENT INVESTIGATION</p>
+        <h1>Incident #{{ incident.incident_id }}</h1>
+        <p>Review the evidence timeline and determine the resolution.</p>
+    </div>
+
+    <a href="{{ url_for('incidents') }}" class="btn btn-secondary">
+        ← BACK TO INCIDENTS
+    </a>
+</div>
+
+
+<div class="incident-overview">
+
+    <div class="overview-main">
+
+        <div class="incident-title-row">
+
+            <div>
+                <p class="eyebrow">INCIDENT</p>
+                <h2>{{ incident.title }}</h2>
+            </div>
+
+            <span class="incident-severity {{ incident.severity|lower }}">
+                {{ incident.severity }}
+            </span>
+
+        </div>
+
+        <p class="incident-description">
+            {{ incident.description }}
+        </p>
+
+        <div class="incident-meta">
+
+            <div>
+                <span>APPLICATION</span>
+                <strong>{{ incident.application_name }}</strong>
+            </div>
+
+            <div>
+                <span>CREATED</span>
+                <strong>{{ incident.created_at }}</strong>
+            </div>
+
+            <div>
+                <span>STATUS</span>
+                <strong>{{ incident.status }}</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="investigation-layout">
+
+    <section class="timeline-section">
+
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">EVIDENCE CHAIN</p>
+                <h2>Incident Timeline</h2>
+            </div>
+        </div>
+
+
+        {% if timeline %}
+
+        <div class="timeline">
+
+            {% for event in timeline %}
+
+            <div class="timeline-item">
+
+                <div class="timeline-marker
+                    {% if event.status == 'FAILED' %}
+                        failed
+                    {% else %}
+                        success
+                    {% endif %}
+                ">
+                </div>
+
+                <div class="timeline-content">
+
+                    <div class="timeline-top">
+
+                        <div>
+                            <strong>{{ event.event_type }}</strong>
+
+                            <span class="timeline-status
+                                {% if event.status == 'FAILED' %}
+                                    failed
+                                {% else %}
+                                    success
+                                {% endif %}
+                            ">
+                                {{ event.status }}
+                            </span>
+                        </div>
+
+                        <time>
+                            {{ event.event_time }}
+                        </time>
+
+                    </div>
+
+                    <p>
+                        {{ event.description }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+            <h3>No evidence events linked</h3>
+            <p>No events are currently associated with this incident.</p>
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <aside class="investigation-panel">
+
+        <p class="eyebrow">INVESTIGATION ACTION</p>
+
+        {% if incident.status == 'OPEN' %}
+
+        <h3>Start Investigation</h3>
+
+        <p>
+            Move this incident into investigation status before
+            recording the root cause and resolution.
+        </p>
+
+        <form method="POST"
+              action="{{ url_for('investigate_incident', incident_id=incident.incident_id) }}">
+
+            <button type="submit" class="btn btn-primary full-width">
+                START INVESTIGATION
+            </button>
+
+        </form>
+
+
+        {% elif incident.status == 'UNDER INVESTIGATION' %}
+
+        <h3>Investigation in Progress</h3>
+
+        <p>
+            Review the evidence timeline and record the root cause
+            and corrective action.
+        </p>
+
+        <a href="{{ url_for('resolution', incident_id=incident.incident_id) }}"
+           class="btn btn-primary full-width">
+            RESOLVE INCIDENT
+        </a>
+
+
+        {% elif incident.status == 'RESOLVED' %}
+
+        <div class="resolved-box">
+
+            <div class="resolved-icon">✓</div>
+
+            <h3>Incident Resolved</h3>
+
+            <p>
+                This investigation has been completed successfully.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </aside>
+
+</div>
+
+
+{% if resolution %}
+
+<section class="resolution-section">
+
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">FINAL REPORT</p>
+            <h2>Resolution Details</h2>
+        </div>
+
+        <span class="status-badge success">
+            RESOLVED
+        </span>
+    </div>
+
+
+    <div class="resolution-grid">
+
+        <div class="resolution-card">
+
+            <span>ROOT CAUSE</span>
+
+            <p>
+                {{ resolution.root_cause }}
+            </p>
+
+        </div>
+
+
+        <div class="resolution-card">
+
+            <span>RESOLUTION</span>
+
+            <p>
+                {{ resolution.resolution }}
+            </p>
+
+        </div>
+
+
+        <div class="resolution-card">
+
+            <span>RESOLVED BY</span>
+
+            <p>
+                {{ resolution.resolver_name or 'Investigator' }}
+            </p>
+
+        </div>
+
+
+        <div class="resolution-card">
+
+            <span>RESOLVED AT</span>
+
+            <p>
+                {{ resolution.resolved_at }}
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+{% endblock %}

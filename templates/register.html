@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block title %}Register | BLACK BOX{% endblock %}
+
+{% block content %}
+
+<div class="auth-page">
+
+    <div class="auth-layout register-layout">
+
+        <!-- LEFT -->
+
+        <div class="auth-info">
+
+            <div class="auth-info-badge">
+                <span class="status-pulse"></span>
+                NEW INVESTIGATOR
+            </div>
+
+            <h1>
+                Build your
+                <span>investigation workspace.</span>
+            </h1>
+
+            <p>
+                Create your BLACK BOX account and start monitoring
+                application activity and investigating abnormal events.
+            </p>
+
+
+            <div class="auth-mini-card">
+
+                <div class="mini-card-top">
+                    <span>BLACK BOX</span>
+                    <span class="mini-live">READY</span>
+                </div>
+
+                <div class="mini-lines">
+
+                    <div>
+                        <span>EVENT MONITORING</span>
+                        <strong>ACTIVE</strong>
+                    </div>
+
+                    <div>
+                        <span>INCIDENT DETECTION</span>
+                        <strong>ACTIVE</strong>
+                    </div>
+
+                    <div>
+                        <span>INVESTIGATION</span>
+                        <strong>READY</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <div class="auth-card">
+
+            <div class="auth-card-header">
+
+                <div class="auth-mobile-logo">
+                    BB
+                </div>
+
+                <p class="eyebrow">
+                    CREATE ACCOUNT
+                </p>
+
+                <h2>
+                    New investigator
+                </h2>
+
+                <p>
+                    Set up your BLACK BOX investigation workspace.
+                </p>
+
+            </div>
+
+
+            <form method="POST" class="auth-form">
+
+                <div class="form-group">
+
+                    <label for="name">
+                        FULL NAME
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">◆</span>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        EMAIL ADDRESS
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">@</span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        PASSWORD
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">●</span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="password">
+                            SHOW
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="confirm_password">
+                        CONFIRM PASSWORD
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">●</span>
+
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder="Confirm password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit"
+                        class="btn btn-primary auth-submit">
+
+                    CREATE ACCOUNT
+
+                    <span>→</span>
+
+                </button>
+
+            </form>
+
+
+            <div class="auth-switch">
+
+                Already have an account?
+
+                <a href="{{ url_for('login') }}">
+                    Sign in
+                </a>
+
+            </div>
+
+
+            <a href="{{ url_for('index') }}"
+               class="auth-back">
+
+                ← Back to BLACK BOX
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
